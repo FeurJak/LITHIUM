@@ -1,5 +1,10 @@
 [workspace]
-members = []
+
+members = [
+"lithium_circom/circom_ffi",
+"lithium_circom/circom_compiler",
+"lithium_circom/constraint_system",
+]
 
 resolver = "2"
 
@@ -18,3 +23,16 @@ trivial_casts = "warn"
 trivial_numeric_casts = "warn"
 unused_import_braces = "warn"
 unused_qualifications = "warn"
+
+
+
+[workspace.dependencies]
+ffi = { path = "lithium_circom/circom_ffi"}
+compiler = { path = "lithium_circom/circom_compiler"}
+syscs = { path = "lithium_circom/constraint_system"}
+
+codespan = { version = "0.11.1", features = ["serialization"] }
+codespan-lsp = "0.11.1"
+codespan-reporting = "0.11.1"
+serde = { version = "1.0.136", features = ["derive"] }
+serde_json = "1.0"

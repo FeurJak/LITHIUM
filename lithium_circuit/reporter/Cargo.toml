@@ -1,5 +1,5 @@
 [package]
-name = "circom_compiler"
+name = "reporter"
 version.workspace = true
 authors.workspace = true
 edition.workspace = true
@@ -13,4 +13,11 @@ workspace = true
 
 [dependencies]
 codespan-reporting.workspace = true
+codespan.workspace = true
+file_map.workspace = true
+fxhash.workspace = true
 serde.workspace = true
+tracing.workspace = true
+flate2.workspace = true
+serde_json.workspace = true
+base64.workspace = true

@@ -1,0 +1,28 @@
+[package]
+name = "circuit_compiler"
+version.workspace = true
+authors.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+license.workspace = true
+build = "build.rs"
+
+[dependencies]
+file_map.workspace = true
+
+num-bigint.workspace = true
+num-bigint-dig.workspace = true
+thiserror.workspace = true
+lalrpop-util = { version = "0.22.2", features = ["lexer"] }
+codespan.workspace = true
+serde.workspace = true
+codespan-reporting.workspace = true
+strum_macros.workspace = true
+strum.workspace = true
+
+reporter.workspace = true
+iter_extended.workspace = true
+
+[build-dependencies]
+lalrpop = { version = "0.22.2", features = ["lexer"] }
+num-bigint-dig.workspace = true

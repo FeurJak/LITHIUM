@@ -1,9 +1,15 @@
 [workspace]
 
 members = [
-"lithium_circom/circom_ffi",
-"lithium_circom/circom_compiler",
-"lithium_circom/constraint_system",
+
+"lithium_circuit/circuit_program",
+"lithium_circuit/circuit_compiler",
+"lithium_circuit/reporter",
+
+# Utils
+"utils/iter_extended",
+"utils/file_map"
+
 ]
 
 resolver = "2"
@@ -24,15 +30,41 @@ trivial_numeric_casts = "warn"
 unused_import_braces = "warn"
 unused_qualifications = "warn"
 
-
-
 [workspace.dependencies]
-ffi = { path = "lithium_circom/circom_ffi"}
-compiler = { path = "lithium_circom/circom_compiler"}
-syscs = { path = "lithium_circom/constraint_system"}
+circuit-program = { path = "lithium_circuit/circuit_program" }
+circuit-compiler = { path = "lithium_circuit/circuit_compiler" }
+reporter = { path = "lithium_circuit/reporter" }
+
+iter_extended = { path = "utils/iter_extended"}
+file_map = { path = "utils/file_map"}
 
 codespan = { version = "0.11.1", features = ["serialization"] }
 codespan-lsp = "0.11.1"
 codespan-reporting = "0.11.1"
 serde = { version = "1.0.136", features = ["derive"] }
 serde_json = "1.0"
+build-data = "0.1.3"
+toml = "0.7.2"
+tracing = "0.1.40"
+tracing-web = "0.1.3"
+tracing-subscriber = { version = "0.3.18", features = ["env-filter", "json"] }
+dirs = "4"
+thiserror = "1.0.21"
+url = "2.5.4"
+tempfile = "3.6.0"
+test-case = "3.3.1"
+smol_str = { version = "0.3.2", features = ["serde"] }
+clap = { version = "4.3.19", features = ["derive", "env"] }
+fxhash = "0.2.1"
+color-eyre = "0.6.2"
+flate2 = "1.0.24"
+base64 = "0.21.2"
+const_format = "0.2.30"
+num-bigint = "0.4"
+num-traits = "0.2"
+num_enum = "0.7.3"
+num-integer = "0.1"
+num-bigint-dig = "0.8.4"
+rayon = "1.8.0"
+strum_macros = "0.24"
+strum = "0.24"

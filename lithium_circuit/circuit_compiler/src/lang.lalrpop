@@ -1,0 +1,86 @@
+use num_bigint::BigInt;
+use file_map::FileId;
+use reporter::{Span, Location};
+use crate::{parser::{ParserError, Item}, ast::AST};
+use lalrpop_util::ParseError;
+
+grammar<'err>(file_id: usize,field: &BigInt, no_init: bool,errors:&'err mut Vec<ParserError>);
+
+IDENTIFIER : String = {
+    r"[$_]*[a-zA-Z][a-zA-Z$_0-9]*" => String::from(<>),
+};
+
+STRING : String = {
+    <s:r#""[^"\n]*""#> => String::from(&s[1..s.len()-1])
+};
+
+Semicolon:() = {
+    ";" => (),
+    <s:@L> ! <e:@R> => errors.push(ParserError::missing_semicolon(Location::new(Span::from(s..e), FileId::from(file_id))))
+}
+
+
+// A identifier list is a comma separated list of identifiers
+IdentifierListDef : Vec<String> = {
+    <v:(<IDENTIFIER> ",")*> <e:IDENTIFIER> => {
+        let mut v = v;
+        v.push(e);
+        v
+    },
+};
+
+// Includes are added at the start of the file.
+// Their structure is the following:#include "path to the file
+ParseInclude:Item = {
+    "include" <s:@L> <item:STRING> <e:@R> Semicolon => {
+        Item::new_include(item, s, e, file_id)
+    },
+    "include" <!> Semicolon => {
+        match <>.error {
+            ParseError::UnrecognizedToken { ref token, .. } => {
+                errors.push(ParserError::unrecognized_include(Location::new(Span::from(token.0..token.2), FileId::from(file_id))));
+            }
+            _ => unreachable!(),
+        }
+        Item::new_include("".to_owned(),0,0, file_id)
+    },
+};
+
+pub LITHIUM:AST = {
+    <s:@L> <includes:ParseInclude*> <e:@R>
+    => {
+        let ast = AST::new(includes);
+        ast
+    },
+};
+
+// ====================================================================
+// Body
+// ====================================================================
+
+// ====================================================================
+// Definitions
+// ====================================================================
+
+
+// ====================================================================
+// VariableDefinitions
+// ====================================================================
+
+// ====================================================================
+// Statements
+// ====================================================================
+
+// ====================================================================
+// Variable
+// ====================================================================
+
+
+// ====================================================================
+// Expression
+// ====================================================================
+
+
+// ====================================================================
+// Terminals
+// ====================================================================

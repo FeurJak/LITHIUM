@@ -26,5 +26,5 @@ go.work.sum
 
 .DS_Store
 .idea
-/target
+target
 .dump
